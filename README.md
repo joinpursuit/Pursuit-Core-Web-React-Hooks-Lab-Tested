@@ -2,10 +2,11 @@
 
 [![Pursuit Logo](https://avatars1.githubusercontent.com/u/5825944?s=200&v=4)](https://pursuit.org)
 
-## Tasks
+## Refactor Using Hooks and Class Components
 
-Refactor the existing Todo app so that it's **Class Components** and **Lifecycle Methods** are replaced by **Functional Components** and **Hooks**. The existing Todo app has the following functionality. The existing tests only confirm the UI functionality, not use of Hooks.
+When you fork this repo, all of the existing Todo app's tests will be passing initially. Your task is to refactor the existing Todo app's components so that it's `Class Components` and `Lifecycle Methods` are replaced with `Functional Components` and `Hooks` and to make sure the tests still pass once you have accomplished the refactor. The existing cypress tests only confirm that the UI functions, not that `Hooks` are implemented.
 
+The existing Todo app has the following functionality:
 - Users can create a new Todo by typing text into an `input` inside a `form` and pressing enter
 - Shows a list of todos with id `#todos` underneath that input
   - Use an instance of a `Todo` component for each of the Todos
@@ -13,7 +14,8 @@ Refactor the existing Todo app so that it's **Class Components** and **Lifecycle
 - When a todo is created or deleted, a pop-up "toast" will appear to notify the user that the action has been completed.
 - Whenever the count of todos changes, a pop-up "toast" will appear to notify the user that the todo count has changed.
 
-Refactor **Class Components** and replace **Lifecycle Methods** with **Functional Components** and **Hooks** to fire the created/deleted/count notifications:
+## Tasks
+Your task is to refactor **Class Components** and replace **Lifecycle Methods** with **Functional Components** and **Hooks** to fire the created/deleted/count notifications:
 
 - Replace `componentDidMount` in `Todo` with `useEffect` to show a `"success"` toast with the text `New todo added: {todo}`
 - Replace `componentWillUnmount` in `Todo` with `useEffect` to show an `"error"` toast with the text `Todo deleted: {todo}`
