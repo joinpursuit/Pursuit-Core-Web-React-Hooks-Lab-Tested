@@ -1,72 +1,58 @@
-import React from "react";
-import { ToastContainer } from "react-toastify";
-import Todos from "./Components/Todos";
+import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import Todo from "./Components/Todo.js";
 import "../node_modules/react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import Form from "./Components/Form";
-import uuidv4 from "uuid/v4";
+import { v4 as uuid } from "uuid";
 
-class App extends React.Component {
-  state = {
-    todos: [],
-    input: "",
+const App = () => {
+  const [input, setInput] = useState("");
+  const [todo, setTodo] = useState([]);
+  const [update, setUpdate] = useState(false);
+
+  const handleChange = (e) => {
+    setInput(e.target.value);
   };
 
-  handleChange = (e) => {
-    const { value } = e.target;
-  
-    this.setState(
-      {
-        input: value 
-      }
-    );
-  };
-
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    const { input } = this.state;
-    const newToDo = { 
-      text: input,
-      uuid: uuidv4()
-    };
-    this.addToDo(newToDo);
-    this.setState({ input: "" });
+    let todos = { text: input, id: uuid() };
+    setTodo([...todo, todos]);
+    setInput("");
   };
 
-  addToDo = (todo) => {
-    this.setState((prevState) => {
-      return { 
-        todos: [...prevState.todos, todo] 
-      };
+  const removeLi = (id) => {
+    let todoLi = todo.filter((elem) => {
+      return elem.id !== id;
     });
+    setTodo(todoLi);
   };
 
-  deleteToDo = (todo) => {
-    const { todos } = this.state;
-    const filterTodos = todos.filter((item) => {
-      return todo.uuid !== item.uuid;
-    }); 
-    this.setState({ todos: filterTodos });
-  };
+  useEffect(() => {
+    if (update) {
+      toast(`Remaining todos: ${todo.length}`);
+    }
+    setUpdate(true);
+  }, [todo]);
 
-  render() {
-    const { input, todos } = this.state;
-  
-    return (
-      <div className="App">
-        <ToastContainer />
-        <h2>Todo List</h2>
-        <Form
-          input={input}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit} />
-        <Todos 
-          todos={todos}
-          deleteToDo={this.deleteToDo} />
-      </div>
-    );
-  }
-}
+  const li = todo.map((todo) => {
+    return <Todo key={todo.id} remove={removeLi} todo={todo} />;
+  });
+
+  return (
+    <div className="app">
+      <form onSubmit={handleSubmit}>
+        <input
+          onChange={handleChange}
+          value={input}
+          placeholder="Enter a Todo"
+          type="text"
+        />
+      </form>
+      <ul id="todos">{li}</ul>
+      <ToastContainer />
+    </div>
+  );
+};
 
 export default App;
