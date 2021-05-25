@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 
 function Todos({ todos, deleteToDo }) {
-  let prevLength = useRef();
+  let prevLength = useRef(0);
 
   useEffect(() => {
     if (prevLength.current !== todos.length) {
