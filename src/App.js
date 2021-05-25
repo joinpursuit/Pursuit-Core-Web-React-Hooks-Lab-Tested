@@ -10,6 +10,8 @@ const App = () => {
 
   const [ todos, setTodos ] = useState([])
   const [ input, setInput ] = useState("")
+  const [ deleted, setDeleted ] = useState("")
+  const [ prevTodos, setPrevTodos ] = useState([])
 
   useEffect( () =>{
 
@@ -29,7 +31,7 @@ const App = () => {
     };
 
     addToDo(newToDo);
-    setInput( "");
+    setInput("");
   };
 
   const addToDo = (task) => {
@@ -37,11 +39,14 @@ const App = () => {
   };
 
   const deleteToDo = (todo) => {
-    console.log(todo)
+    console.log('to be deleted : ', todo.text)
+
     const filterTodos = todos.filter((item) => {
       return todo.uuid !== item.uuid;
     });
-    console.log(filterTodos)
+ 
+    setPrevTodos(todos)
+    setDeleted(todo.text)
     setTodos( filterTodos );
   };
 
@@ -57,6 +62,8 @@ const App = () => {
           handleSubmit={handleSubmit} />
         <Todos 
           todos={todos}
+          deleted = {deleted}
+          prevTodos={prevTodos}
           deleteToDo={deleteToDo} />
       </div>
     );

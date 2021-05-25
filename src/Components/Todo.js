@@ -1,22 +1,22 @@
 import React, { useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 
-const Todo = ({ prevTodos, todos, todo, deleteToDo }) =>{
+const Todo = ({ deleted, prevTodos, todos, todo, deleteToDo }) =>{
 
   
   useEffect( ()=> {
     toast.success(`New todo added: ${todo.text}`);
   },[])
-
+  
+  
   useEffect( ()=> {
+    console.log(prevTodos)
 
-    if (prevTodos.current !== todos.length-1) {
-      toast.error(`Todo deleted: ${todo.text}`);
-      prevTodos = todo.length
+    if (prevTodos.length-1 === todos.length  ) {
+      toast.error(`Todo deleted: ${deleted}`);
     } 
-  },[todo])
-
-
+  },[todos],[prevTodos])
+  
   return (
       <li className="todos">
         {todo.text}

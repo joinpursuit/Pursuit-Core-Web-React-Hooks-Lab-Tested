@@ -3,28 +3,28 @@ import Todo from "./Todo";
 import { toast } from "react-toastify";
 
 
-const Todos = ({ todos, deleteToDo }) => {
+const Todos = ({ deleted, prevTodos, todos, deleteToDo }) => {
 
-  const prevTodos = useRef(todos.length)
-  console.log(prevTodos)
+  // const prevTodos = useRef(todos.length)
+  // console.log(prevTodos)
 
-  useEffect( () => {
+  // useEffect( () => {
     
-    if (prevTodos.current !== todos.length) {
-      toast(`Remaining todos: ${todos.length}`, {
-        className: 'Toastify__toast--default'
-      });
-      prevTodos.current =todos.length
-    }
+  //   if (prevTodos.current !== todos.length) {
+  //     toast(`Remaining todos: ${todos.length}`, {
+  //       className: 'Toastify__toast--default'
+  //     });
+  //     prevTodos.current =todos.length
+  //   }
     
-  },[todos])
+  // },[todos])
 
   
 
     return (
       <ul id="todos">
         {todos.map((todo) => {
-          return <Todo prevTodos={prevTodos} todos={todos} todo={todo} deleteToDo={deleteToDo} key={todo.uuid}/>;
+          return <Todo deleted={deleted} prevTodos={prevTodos} todos={todos} todo={todo} deleteToDo={deleteToDo} key={todo.uuid}/>;
         })}
       </ul>
     );
