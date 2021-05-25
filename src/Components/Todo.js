@@ -1,29 +1,21 @@
-import React, { useEffect, useRef } from "react";
-import { toast } from "react-toastify";
+import React, { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
-const Todo = ({ deleted, prevTodos, todos, todo, deleteToDo }) =>{
+const Todo = ({ todo, deleteToDo }) => {
+  useEffect(() => {
+    toast.success(`New todo added: ${todo.text}`)
 
-  
-  useEffect( ()=> {
-    toast.success(`New todo added: ${todo.text}`);
-  },[])
-  
-  
-  useEffect( ()=> {
-    console.log(prevTodos)
+    return () => {
+      toast.error(`Todo deleted: ${todo.text}`)
+    }
+  }, [])
 
-    if (prevTodos.length-1 === todos.length  ) {
-      toast.error(`Todo deleted: ${deleted}`);
-    } 
-  },[todos],[prevTodos])
-  
   return (
-      <li className="todos">
-        {todo.text}
-        <button onClick={ () =>deleteToDo(todo) }>x</button>
-      </li>
-    );
-  }
+    <li className='todos'>
+      {todo.text}
+      <button onClick={() => deleteToDo(todo)}>x</button>
+    </li>
+  )
+}
 
-
-export default Todo;
+export default Todo
