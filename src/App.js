@@ -1,72 +1,56 @@
-import React from "react";
-import { ToastContainer } from "react-toastify";
-import Todos from "./Components/Todos";
-import "../node_modules/react-toastify/dist/ReactToastify.css";
-import "./App.css";
-import Form from "./Components/Form";
-import uuidv4 from "uuid/v4";
+import React, { useState } from 'react'
+import { ToastContainer } from 'react-toastify'
+import Todos from './Components/Todos'
+import '../node_modules/react-toastify/dist/ReactToastify.css'
+import './App.css'
+import Form from './Components/Form'
+import uuidv4 from 'uuid/v4'
 
-class App extends React.Component {
-  state = {
-    todos: [],
-    input: "",
-  };
+const App = () => {
+  const [todos, setTodos] = useState([])
+  const [input, setInput] = useState('')
 
-  handleChange = (e) => {
-    const { value } = e.target;
-  
-    this.setState(
-      {
-        input: value 
-      }
-    );
-  };
+  const handleChange = e => {
+    setInput(e.target.value)
+  }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = e => {
+    e.preventDefault()
 
-    const { input } = this.state;
-    const newToDo = { 
+    const newToDo = {
       text: input,
       uuid: uuidv4()
-    };
-    this.addToDo(newToDo);
-    this.setState({ input: "" });
-  };
+    }
 
-  addToDo = (todo) => {
-    this.setState((prevState) => {
-      return { 
-        todos: [...prevState.todos, todo] 
-      };
-    });
-  };
-
-  deleteToDo = (todo) => {
-    const { todos } = this.state;
-    const filterTodos = todos.filter((item) => {
-      return todo.uuid !== item.uuid;
-    }); 
-    this.setState({ todos: filterTodos });
-  };
-
-  render() {
-    const { input, todos } = this.state;
-  
-    return (
-      <div className="App">
-        <ToastContainer />
-        <h2>Todo List</h2>
-        <Form
-          input={input}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit} />
-        <Todos 
-          todos={todos}
-          deleteToDo={this.deleteToDo} />
-      </div>
-    );
+    addToDo(newToDo)
+    setInput('')
   }
+
+  const addToDo = task => {
+    setTodos(todos.concat(task))
+  }
+
+  const deleteToDo = todo => {
+    console.log('to be deleted : ', todo.text)
+
+    const filterTodos = todos.filter(item => {
+      return todo.uuid !== item.uuid
+    })
+    setTodos(filterTodos)
+  }
+
+  return (
+    <div className='App'>
+      <ToastContainer />
+      <h2>Todo List</h2>
+      <Form
+        input={input}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
+      <Todos todos={todos} deleteToDo={deleteToDo} />
+    </div>
+  )
 }
 
-export default App;
+export default App
