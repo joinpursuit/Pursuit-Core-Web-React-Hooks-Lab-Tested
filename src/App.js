@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import Todos from "./Components/Todos";
 import "../node_modules/react-toastify/dist/ReactToastify.css";
@@ -6,67 +6,61 @@ import "./App.css";
 import Form from "./Components/Form";
 import uuidv4 from "uuid/v4";
 
-class App extends React.Component {
-  state = {
-    todos: [],
-    input: "",
+const App = () => {
+
+  const [ todos, setTodos ] = useState([])
+  const [ input, setInput ] = useState("")
+
+  useEffect( () =>{
+
+
+  },[])
+
+ const handleChange = (e) => {
+    setInput(e.target.value)
   };
 
-  handleChange = (e) => {
-    const { value } = e.target;
-  
-    this.setState(
-      {
-        input: value 
-      }
-    );
-  };
-
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { input } = this.state;
     const newToDo = { 
       text: input,
       uuid: uuidv4()
     };
-    this.addToDo(newToDo);
-    this.setState({ input: "" });
+
+    addToDo(newToDo);
+    setInput( "");
   };
 
-  addToDo = (todo) => {
-    this.setState((prevState) => {
-      return { 
-        todos: [...prevState.todos, todo] 
-      };
-    });
+  const addToDo = (task) => {
+    setTodos( todos.concat(task))
   };
 
-  deleteToDo = (todo) => {
-    const { todos } = this.state;
+  const deleteToDo = (todo) => {
+    console.log(todo)
     const filterTodos = todos.filter((item) => {
       return todo.uuid !== item.uuid;
-    }); 
-    this.setState({ todos: filterTodos });
+    });
+    console.log(filterTodos)
+    setTodos( filterTodos );
   };
 
-  render() {
-    const { input, todos } = this.state;
   
+   
     return (
       <div className="App">
         <ToastContainer />
         <h2>Todo List</h2>
         <Form
           input={input}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit} />
+          handleChange={handleChange}
+          handleSubmit={handleSubmit} />
         <Todos 
           todos={todos}
-          deleteToDo={this.deleteToDo} />
+          deleteToDo={deleteToDo} />
       </div>
     );
   }
-}
+
 
 export default App;
