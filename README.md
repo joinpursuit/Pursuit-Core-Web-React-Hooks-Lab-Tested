@@ -25,7 +25,7 @@ For the toasts notifications, this app uses the [react-toastify](https://github.
 
 ![todos react app in use](./todosHooksAppGif.gif)
 
-## Getting Started
+## Getting Started\
 
 - Fork this repo
 - Clone the forked repository
