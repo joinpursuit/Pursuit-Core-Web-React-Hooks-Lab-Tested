@@ -1,16 +1,16 @@
 import React from "react";
 
 const Form = ({ input, handleChange, handleSubmit }) => {
-
   return (
     <>
-      <form onSubmit={ handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="input">Add Todo: </label>
         <input
           onChange={handleChange}
           id="input"
           value={input}
-          placeholder="Enter Todo" />
+          placeholder="Enter Todo"
+        />
       </form>
     </>
   );
