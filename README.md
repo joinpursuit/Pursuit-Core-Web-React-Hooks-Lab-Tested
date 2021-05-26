@@ -40,3 +40,5 @@ For the toasts notifications, this app uses the [react-toastify](https://github.
 - When finished, commit and push your work.
 - Make a pull request on github.
 - Submit the link to your pull request on Canvas.
+
+
