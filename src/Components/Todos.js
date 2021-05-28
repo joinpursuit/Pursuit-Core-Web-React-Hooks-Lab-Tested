@@ -1,29 +1,25 @@
 import React from "react";
 import Todo from "./Todo";
+import { useEffect } from 'react';
 import { toast } from "react-toastify";
 
 
-class Todos extends React.Component {
+const Todos = ({ todos, deleteToDo }) => {
+  useEffect(() => {
+    toast(`Remaining todos: ${todos.length}`, {
+      className: 'Toastify__toast--default'
+    });
 
-  componentDidUpdate(prevProps) {
-    const todos = this.props.todos;
-    if (prevProps.todos.length !== todos.length) {
-      toast(`Remaining todos: ${todos.length}`, {
-        className: 'Toastify__toast--default'
-      });
-    }
-  }
+  }, [todos])
 
-  render() {
-    const { todos, deleteToDo } = this.props;
-    return (
-      <ul id="todos">
-        {todos.map((todo) => {
-          return <Todo todo={todo} deleteToDo={deleteToDo} key={todo.uuid}/>;
-        })}
-      </ul>
-    );
-  }
+  return (
+    <ul id="todos">
+      {todos.map((todo) => {
+        return <Todo todo={todo} deleteToDo={deleteToDo} key={todo.uuid} />;
+      })}
+    </ul>
+  );
+
 }
 
 export default Todos;
