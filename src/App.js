@@ -7,104 +7,68 @@ import Form from "./Components/Form";
 import uuidv4 from "uuid/v4";
 
 
-function App() {
-  const [todos, setTodos] = useState([]);
-  const [input, setInput] = useState("");
-  const handleChange = (e) => {
+
+
+class App extends React.Component {
+  state = {
+    todos: [],
+    input: "",
+  };
+
+  handleChange = (e) => {
     const { value } = e.target;
-    setInput(value);
+    this.setState(
+      {
+        input: value 
+      }
+    );
   };
-  const handleSubmit = (e) => {
+
+  handleSubmit = (e) => {
     e.preventDefault();
-    const newToDo = {
+
+    const { input } = this.state;
+    const newToDo = { 
       text: input,
-      uuid: uuidv4(),
+      uuid: uuidv4()
     };
-    addToDo(newToDo);
-    setInput("");
+    this.addToDo(newToDo);
+    this.setState({ input: "" });
   };
-  const addToDo = (todo) => setTodos([...todos, todo])
-  const deleteToDo = (todo) => {
+
+  addToDo = (todo) => {
+    this.setState((prevState) => {
+      return { 
+        todos: [...prevState.todos, todo] 
+      };
+    });
+  };
+
+  deleteToDo = (todo) => {
+    const { todos } = this.state;
     const filterTodos = todos.filter((item) => {
       return todo.uuid !== item.uuid;
-    });
-    setTodos(filterTodos);
+    }); 
+    this.setState({ todos: filterTodos });
   };
-  return (
-    <div className="App">
-      <ToastContainer />
-      <h2>Todo List</h2>
-      <Form
-        input={input}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-      />
-      <Todos todos={todos} deleteToDo={deleteToDo} />
-    </div>
-  );
-}
-export default App;
 
-// class App extends React.Component {
-//   state = {
-//     todos: [],
-//     input: "",
-//   };
-
-//   handleChange = (e) => {
-//     const { value } = e.target;
-//     this.setState(
-//       {
-//         input: value 
-//       }
-//     );
-//   };
-
-//   handleSubmit = (e) => {
-//     e.preventDefault();
-
-//     const { input } = this.state;
-//     const newToDo = { 
-//       text: input,
-//       uuid: uuidv4()
-//     };
-//     this.addToDo(newToDo);
-//     this.setState({ input: "" });
-//   };
-
-//   addToDo = (todo) => {
-//     this.setState((prevState) => {
-//       return { 
-//         todos: [...prevState.todos, todo] 
-//       };
-//     });
-//   };
-
-//   deleteToDo = (todo) => {
-//     const { todos } = this.state;
-//     const filterTodos = todos.filter((item) => {
-//       return todo.uuid !== item.uuid;
-//     }); 
-//     this.setState({ todos: filterTodos });
-//   };
-
-//   render() {
-//     const { input, todos } = this.state;
+  render() {
+    const { input, todos } = this.state;
   
-//     return (
-//       <div className="App">
-//         <ToastContainer />
-//         <h2>Todo List</h2>
-//         <Form
-//           input={input}
-//           handleChange={this.handleChange}
-//           handleSubmit={this.handleSubmit} />
-//         <Todos 
-//           todos={todos}
-//           deleteToDo={this.deleteToDo} />
-//       </div>
-//     );
-//   }
-// }
+    return (
+      <div className="App">
+        <ToastContainer />
+        <h2>Todo List</h2>
+        <Form
+          input={input}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit} />
+        <Todos 
+          todos={todos}
+          deleteToDo={this.deleteToDo} />
+      </div>
+    );
+  }
+}
 
-// export default App;
+export default App;
