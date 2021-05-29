@@ -1,10 +1,13 @@
-import React from "react";
+import React,{useState} from "react";
 import { ToastContainer } from "react-toastify";
 import Todos from "./Components/Todos";
 import "../node_modules/react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Form from "./Components/Form";
 import uuidv4 from "uuid/v4";
+
+
+
 
 class App extends React.Component {
   state = {
@@ -14,7 +17,6 @@ class App extends React.Component {
 
   handleChange = (e) => {
     const { value } = e.target;
-  
     this.setState(
       {
         input: value 
