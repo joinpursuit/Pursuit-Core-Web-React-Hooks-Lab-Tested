@@ -1,26 +1,23 @@
-import React from "react";
-import { toast } from "react-toastify";
+import React from 'react'
+import { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
-class Todo extends React.Component {
-  componentDidMount() {
-    const { todo } = this.props;
-    toast.success(`New todo added: ${todo.text}`);
-  }
+function Todo({ todo, deleteToDo }) {
+	useEffect(() => {
+		toast.success(`New todo added: ${todo.text}`)
+		return () => {
+			toast.error(`Todo deleted: ${todo.text}`)
+		}
+	}, [])
 
-  componentWillUnmount() {
-    const { todo } = this.props;
-    toast.error(`Todo deleted: ${todo.text}`);
-  }
-
-  render() {
-    const { todo, deleteToDo } = this.props;
-    return (
-      <li className="todos">
-        {todo.text}
-        <button onClick={() => deleteToDo(todo)}>x</button>
-      </li>
-    );
-  }
+	return (
+		<div>
+			<li className='todos'>
+				{todo.text}
+				<button onClick={() => deleteToDo(todo)}>x</button>
+			</li>
+		</div>
+	)
 }
 
-export default Todo;
+export default Todo
